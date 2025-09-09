@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CheckCircle, Download, Image as ImageIcon, WifiOff } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PushNotificationManager } from '@/components/push-notification-manager';
+import { CameraView } from '@/components/camera-view';
 
 export default function Home() {
   const features = [
@@ -52,6 +53,17 @@ export default function Home() {
             </Card>
           ))}
         </div>
+      </section>
+      
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Card>
+          <CardHeader>
+            <CardTitle>Camera Access Demo</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CameraView />
+          </CardContent>
+        </Card>
       </section>
 
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
