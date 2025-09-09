@@ -5,38 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { urlBase64ToUint8Array } from '@/lib/utils';
-
-// These functions will interact with our API routes
-async function subscribeUser(subscription: PushSubscription) {
-  const response = await fetch('/api/push/subscribe', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(subscription),
-  });
-  if (!response.ok) {
-    throw new Error('Failed to subscribe user.');
-  }
-}
-
-async function unsubscribeUser() {
-  const response = await fetch('/api/push/unsubscribe', {
-    method: 'POST',
-  });
-  if (!response.ok) {
-    throw new Error('Failed to unsubscribe user.');
-  }
-}
-
-async function sendNotification(message: string) {
-  const response = await fetch('/api/push/send', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message }),
-  });
-  if (!response.ok) {
-    throw new Error('Failed to send notification.');
-  }
-}
+import { subscribeUser, unsubscribeUser, sendNotification } from '@/app/actions';
 
 
 export function PushNotificationManager() {
@@ -79,7 +48,7 @@ export function PushNotificationManager() {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY),
       });
-      await subscribeUser(sub);
+      await subscribeUser(JSON.parse(JSON.stringify(sub)));
       setSubscription(sub);
       toast({ title: "Subscribed successfully!" });
     } catch (error) {
@@ -107,9 +76,13 @@ export function PushNotificationManager() {
       return;
     }
     try {
-      await sendNotification(message || 'This is a test notification!');
-      setMessage('');
-      toast({ title: 'Test Notification Sent' });
+      const result = await sendNotification(message || 'This is a test notification!');
+      if (result.success) {
+        setMessage('');
+        toast({ title: 'Test Notification Sent' });
+      } else {
+        throw new Error(result.error || 'Unknown error');
+      }
     } catch (error) {
       console.error('Failed to send notification:', error);
       toast({ variant: 'destructive', title: 'Send Failed', description: 'Could not send test notification.' });
