@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { CheckCircle, Download, Image as ImageIcon, WifiOff } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { PushNotificationManager } from '@/components/push-notification-manager';
 
 export default function Home() {
   const features = [
@@ -51,6 +52,17 @@ export default function Home() {
             </Card>
           ))}
         </div>
+      </section>
+
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Card>
+          <CardHeader>
+            <CardTitle>Push Notifications Demo</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PushNotificationManager />
+          </CardContent>
+        </Card>
       </section>
 
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
