@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { urlBase64ToUint8Array } from '@/lib/utils';
-import { Card, CardDescription } from './ui/card';
 
 // These functions will interact with our API routes
 async function subscribeUser(subscription: PushSubscription) {
@@ -65,10 +64,11 @@ export function PushNotificationManager() {
 
   const handleSubscribe = async () => {
     if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY) {
+      console.error('VAPID public key is not defined.');
       toast({
         variant: 'destructive',
-        title: 'VAPID Key Missing',
-        description: 'VAPID public key is not configured. Please check your environment variables.',
+        title: 'Configuration Error',
+        description: 'VAPID public key is not configured. Push notifications cannot be enabled.',
       });
       return;
     }
