@@ -25,6 +25,10 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  icons: {
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  }
 };
 
 export const viewport: Viewport = {
