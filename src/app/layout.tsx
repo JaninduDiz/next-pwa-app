@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    shortcut: '/icons/favicon.ico',
+    apple: '/icons/apple-touch-icon.png',
   }
 };
 
